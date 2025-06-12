@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android API Levels Reference</title>
+    <meta name="description" content="Complete Android API levels reference with offline support">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQW5kcm9pZCBBUEkgTGV2ZWxzIiwic2hvcnRfbmFtZSI6IkFQSSBMZXZlbHMiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiMyYzNlNTAiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2ZmZmZmZiJ9">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .offline-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+        .offline-indicator.show {
+            display: block;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        td:hover {
+            background: #e3f2fd !important;
+            transform: scale(1.02);
+        }
+
+        td::after {
+            content: '📋';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        td:hover::after {
+            opacity: 0.5;
+        }
+
+        .api-level {
+            font-weight: bold;
+            color: #2c3e50;
+            background: #ecf0f1;
+            text-align: center;
+            border-radius: 5px;
+            padding: 8px;
+        }
+
+        .version {
+            font-weight: 600;
+            color: #27ae60;
+        }
+
+        .codename {
+            color: #8e44ad;
+            font-style: italic;
+        }
+
+        .year {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .stats {
+            padding: 20px;
+            background: #f8f9fa;
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-indicator" id="offlineIndicator">
+        ✓ Available offline
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Android API Levels Reference</h1>
+            <p>Complete mapping of Android versions, API levels, and codenames</p>
+        </div>
+
+        <div class="table-container">
+            <table id="apiTable">
+                <thead>
+                    <tr>
+                        <th>API Level</th>
+                        <th>Android Version</th>
+                        <th>Version Code</th>
+                        <th>Name</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="api-level">36</td>
+                        <td class="version">Android 16 (BETA)</td>
+                        <td>BAKLAVA</td>
+                        <td class="codename">Baklava</td>
+                        <td class="year">2024+</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">35</td>
+                        <td class="version">Android 15</td>
+                        <td>VANILLA_ICE_CREAM</td>
+                        <td class="codename">Vanilla Ice Cream</td>
+                        <td class="year">2024</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">34</td>
+                        <td class="version">Android 14</td>
+                        <td>UPSIDE_DOWN_CAKE</td>
+                        <td class="codename">Upside Down Cake</td>
+                        <td class="year">2023</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">33</td>
+                        <td class="version">Android 13</td>
+                        <td>TIRAMISU</td>
+                        <td class="codename">Tiramisu</td>
+                        <td class="year">2022</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">32</td>
+                        <td class="version">Android 12L</td>
+                        <td>S_V2</td>
+                        <td class="codename">Snow Cone</td>
+                        <td class="year">2021</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">31</td>
+                        <td class="version">Android 12</td>
+                        <td>S</td>
+                        <td class="codename">Snow Cone</td>
+                        <td class="year">2021</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">30</td>
+                        <td class="version">Android 11</td>
+                        <td>R</td>
+                        <td class="codename">Red Velvet Cake</td>
+                        <td class="year">2020</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">29</td>
+                        <td class="version">Android 10</td>
+                        <td>Q</td>
+                        <td class="codename">Quince Tart</td>
+                        <td class="year">2019</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">28</td>
+                        <td class="version">Android 9</td>
+                        <td>P</td>
+                        <td class="codename">Pie</td>
+                        <td class="year">2018</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">27</td>
+                        <td class="version">Android 8.1</td>
+                        <td>O_MR1</td>
+                        <td class="codename">Oreo</td>
+                        <td class="year">2017</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">26</td>
+                        <td class="version">Android 8.0</td>
+                        <td>O</td>
+                        <td class="codename">Oreo</td>
+                        <td class="year">2017</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">25</td>
+                        <td class="version">Android 7.1</td>
+                        <td>N_MR1</td>
+                        <td class="codename">Nougat</td>
+                        <td class="year">2016</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">24</td>
+                        <td class="version">Android 7.0</td>
+                        <td>N</td>
+                        <td class="codename">Nougat</td>
+                        <td class="year">2016</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">23</td>
+                        <td class="version">Android 6</td>
+                        <td>M</td>
+                        <td class="codename">Marshmallow</td>
+                        <td class="year">2015</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">22</td>
+                        <td class="version">Android 5.1</td>
+                        <td>LOLLIPOP_MR1</td>
+                        <td class="codename">Lollipop</td>
+                        <td class="year">2014</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">21</td>
+                        <td class="version">Android 5.0</td>
+                        <td>LOLLIPOP</td>
+                        <td class="codename">Lollipop</td>
+                        <td class="year">2014</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">20</td>
+                        <td class="version">Android 4.4W</td>
+                        <td>KITKAT_WATCH</td>
+                        <td class="codename">KitKat (Watch)</td>
+                        <td class="year">2013</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">19</td>
+                        <td class="version">Android 4.4</td>
+                        <td>KITKAT</td>
+                        <td class="codename">KitKat</td>
+                        <td class="year">2013</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">18</td>
+                        <td class="version">Android 4.3</td>
+                        <td>JELLY_BEAN_MR2</td>
+                        <td class="codename">Jelly Bean</td>
+                        <td class="year">2012</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">17</td>
+                        <td class="version">Android 4.2</td>
+                        <td>JELLY_BEAN_MR1</td>
+                        <td class="codename">Jelly Bean</td>
+                        <td class="year">2012</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">16</td>
+                        <td class="version">Android 4.1</td>
+                        <td>JELLY_BEAN</td>
+                        <td class="codename">Jelly Bean</td>
+                        <td class="year">2012</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">15</td>
+                        <td class="version">Android 4.0.3 - 4.0.4</td>
+                        <td>ICE_CREAM_SANDWICH_MR1</td>
+                        <td class="codename">Ice Cream Sandwich</td>
+                        <td class="year">2011</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">14</td>
+                        <td class="version">Android 4.0.1 - 4.0.2</td>
+                        <td>ICE_CREAM_SANDWICH</td>
+                        <td class="codename">Ice Cream Sandwich</td>
+                        <td class="year">2011</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">13</td>
+                        <td class="version">Android 3.2</td>
+                        <td>HONEYCOMB_MR2</td>
+                        <td class="codename">Honeycomb</td>
+                        <td class="year">2011</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">12</td>
+                        <td class="version">Android 3.1</td>
+                        <td>HONEYCOMB_MR1</td>
+                        <td class="codename">Honeycomb</td>
+                        <td class="year">2011</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">11</td>
+                        <td class="version">Android 3.0</td>
+                        <td>HONEYCOMB</td>
+                        <td class="codename">Honeycomb</td>
+                        <td class="year">2011</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">10</td>
+                        <td class="version">Android 2.3.3 - 2.3.7</td>
+                        <td>GINGERBREAD_MR1</td>
+                        <td class="codename">Gingerbread</td>
+                        <td class="year">2010</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">9</td>
+                        <td class="version">Android 2.3.0 - 2.3.2</td>
+                        <td>GINGERBREAD</td>
+                        <td class="codename">Gingerbread</td>
+                        <td class="year">2010</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">8</td>
+                        <td class="version">Android 2.2</td>
+                        <td>FROYO</td>
+                        <td class="codename">Froyo</td>
+                        <td class="year">2010</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">7</td>
+                        <td class="version">Android 2.1</td>
+                        <td>ECLAIR_MR1</td>
+                        <td class="codename">Eclair</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">6</td>
+                        <td class="version">Android 2.0.1</td>
+                        <td>ECLAIR_0_1</td>
+                        <td class="codename">Eclair</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">5</td>
+                        <td class="version">Android 2.0</td>
+                        <td>ECLAIR</td>
+                        <td class="codename">Eclair</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">4</td>
+                        <td class="version">Android 1.6</td>
+                        <td>DONUT</td>
+                        <td class="codename">Donut</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">3</td>
+                        <td class="version">Android 1.5</td>
+                        <td>CUPCAKE</td>
+                        <td class="codename">Cupcake</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">2</td>
+                        <td class="version">Android 1.1</td>
+                        <td>BASE_1_1</td>
+                        <td class="codename">Petit Four</td>
+                        <td class="year">2009</td>
+                    </tr>
+                    <tr>
+                        <td class="api-level">1</td>
+                        <td class="version">Android 1.0</td>
+                        <td>BASE</td>
+                        <td class="codename">None</td>
+                        <td class="year">2008</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats">
+            <span>36 API levels</span> • Click any cell to copy its content
+        </div>
+    </div>
+
+    <script>
+        // Service Worker Registration for offline support
+        if ('serviceWorker' in navigator) {
+            // Create service worker code as a blob
+            const swCode = `
+                const CACHE_NAME = 'android-api-v1';
+                const urlsToCache = [
+                    '/',
+                    '/index.html'
+                ];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => cache.addAll(urlsToCache))
+                    );
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                    );
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            navigator.serviceWorker.register(swUrl).then(() => {
+                console.log('Service Worker registered');
+                setTimeout(() => {
+                    document.getElementById('offlineIndicator').classList.add('show');
+                    setTimeout(() => {
+                        document.getElementById('offlineIndicator').classList.remove('show');
+                    }, 3000);
+                }, 1000);
+            }).catch(err => console.log('SW registration failed:', err));
+        }
+
+        // Click to copy functionality for ALL table cells
+        document.querySelectorAll('td').forEach(cell => {
+            cell.title = 'Click to copy';
+            
+            cell.addEventListener('click', function() {
+                const content = this.textContent.trim();
+                
+                // Fallback for older browsers
+                if (!navigator.clipboard) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = content;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        showCopied(this);
+                    } catch (err) {
+                        console.error('Copy failed:', err);
+                    }
+                    document.body.removeChild(textArea);
+                    return;
+                }
+                
+                navigator.clipboard.writeText(content).then(() => {
+                    showCopied(this);
+                }).catch(err => {
+                    console.error('Copy failed:', err);
+                });
+            });
+        });
+
+        function showCopied(element) {
+            const originalText = element.textContent;
+            const originalBg = window.getComputedStyle(element).backgroundColor;
+            const originalColor = window.getComputedStyle(element).color;
+            const originalTransform = element.style.transform;
+            
+            element.textContent = '✓ Copied!';
+            element.style.background = '#27ae60';
+            element.style.color = 'white';
+            element.style.transform = 'scale(1)';
+            
+            setTimeout(() => {
+                element.textContent = originalText;
+                element.style.background = '';
+                element.style.color = '';
+                element.style.transform = originalTransform;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
